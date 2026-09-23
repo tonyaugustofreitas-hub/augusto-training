@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>Augusto Training — Fase 1</title>
+<style>
+:root{--bg:#080808;--panel:#111;--panel2:#161616;--red:#a90d16;--red2:#e21b24;--gold:#d6aa52;--text:#eee;--muted:#9b9b9b;--line:#343434}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.45}button{font:inherit;color:inherit}
+.nav{position:absolute;top:0;left:0;right:0;z-index:5;padding:18px 6vw;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #333;background:linear-gradient(180deg,rgba(0,0,0,.8),transparent)}
+.logo{font-weight:900;letter-spacing:3px}.logo span{color:var(--red2)}.links{display:flex;gap:22px;font-size:10px;letter-spacing:2px;color:#aaa}.links a:hover{color:var(--gold)}
+.hero{min-height:570px;position:relative;overflow:hidden;background:linear-gradient(90deg,#050505 0%,rgba(5,5,5,.9) 28%,rgba(5,5,5,.2) 100%),linear-gradient(135deg,#171717 0%,#555 47%,#121212 100%)}
+.hero:before{content:"";position:absolute;inset:-20%;background:repeating-linear-gradient(124deg,transparent 0 100px,rgba(255,255,255,.04) 101px 104px),linear-gradient(124deg,transparent 42%,rgba(178,13,22,.22) 42.3% 43%,transparent 43.3%);transform:rotate(-2deg)}
+.hero-inner{position:relative;max-width:1200px;margin:auto;padding:165px 6vw 75px}.kicker{color:var(--gold);font-size:11px;letter-spacing:5px;font-weight:800}.hero h1{font-size:clamp(46px,8vw,94px);line-height:.86;letter-spacing:-4px;margin:18px 0}.hero h1 span{color:var(--red2)}.hero p{max-width:610px;color:#bdbdbd;font-size:15px}.cta{display:inline-block;margin-top:20px;padding:13px 22px;background:var(--red);border:1px solid var(--red2);font-size:11px;font-weight:900;letter-spacing:1.5px;text-decoration:none;color:#fff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:#0c0c0c;border-top:1px solid #292929;border-bottom:1px solid #292929}.stat{padding:20px 6vw;border-right:1px solid #242424}.stat b{display:block;color:var(--gold);font-size:22px}.stat span{font-size:10px;color:#888;letter-spacing:1px}
+.section{max-width:1200px;margin:auto;padding:65px 6vw}.section-title{font-size:11px;color:var(--gold);letter-spacing:4px;font-weight:800;margin-bottom:9px}.section h2{font-size:34px;line-height:1;margin:0 0 13px}.lead{max-width:720px;color:#aaa}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.card{background:linear-gradient(145deg,#151515,#0d0d0d);border:1px solid #343434;padding:22px;min-height:150px}.card:hover{border-color:#8b1016}.number{color:var(--red2);font-size:27px;font-weight:900}.card h3{font-size:14px;margin:8px 0;color:#eee}.card p,.card li{font-size:12px;color:#999}.card ul{padding-left:17px}
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:15px}.panel{background:#101010;border:1px solid #303030;padding:25px}.panel h3{margin-top:0;color:var(--gold);font-size:13px;letter-spacing:2px}.bar{height:4px;background:#292929;margin:14px 0}.bar i{display:block;height:100%;background:var(--red2);width:72%}
+.schedule{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid #303030}.day{padding:17px 10px;border-right:1px solid #303030;min-height:130px}.day:last-child{border:0}.day b{font-size:11px;color:var(--gold)}.day strong{display:block;margin-top:15px;font-size:13px}.day small{display:block;color:#888;margin-top:5px;font-size:10px}
+.workouts{display:grid;grid-template-columns:1fr 1fr;gap:14px}.workout{background:#0f0f0f;border:1px solid #3b1012}.workout-head{padding:20px;background:linear-gradient(100deg,#180707,#111)}.workout-head h3{margin:0;color:var(--red2);font-size:22px}.workout-head p{margin:4px 0 0;color:#999;font-size:11px}.exercise{display:grid;grid-template-columns:42px 1fr auto;gap:10px;padding:15px;border-top:1px solid #272727;align-items:start}.exercise .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--red);font-weight:900}.exercise b{font-size:12px}.exercise small{display:block;color:#888;margin-top:4px;font-size:10px}.load{color:var(--gold);font-size:10px;text-align:right}
+.table{width:100%;border-collapse:collapse;margin-top:20px;font-size:11px}.table th,.table td{padding:12px;border-bottom:1px solid #292929;text-align:left}.table th{color:var(--gold);font-size:10px;letter-spacing:1px}.table td{color:#aaa}
+.notice{border-left:3px solid var(--red2);background:#150909;padding:17px;color:#aaa;font-size:12px;margin-top:18px}.notice strong{color:#eee}
+.footer{padding:45px 6vw;border-top:1px solid #292929;text-align:center;color:#777;font-size:10px;letter-spacing:2px}.footer span{color:var(--gold)}
+.appbar{position:fixed;bottom:0;left:0;right:0;background:rgba(8,8,8,.96);border-top:1px solid #3a0c0e;z-index:20;display:flex;justify-content:center;gap:7px;padding:8px}.appbar button{background:#141414;border:1px solid #333;padding:10px 14px;font-size:10px;letter-spacing:1px}.appbar button:hover{border-color:var(--red2)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:30;padding:20px}.modal.open{display:grid;place-items:center}.modalbox{width:min(650px,100%);max-height:90vh;overflow:auto;background:#101010;border:1px solid #681017;padding:25px}.close{float:right;background:none;color:var(--gold);border:0;font-size:20px}.timer{font-size:45px;color:var(--gold);text-align:center;margin:20px}.timer-controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.timer-controls button{background:#191919;border:1px solid #444;padding:11px 16px}.timer-controls .primary{background:var(--red);border-color:var(--red2)}
+@media(max-width:800px){.links{display:none}.stats{grid-template-columns:1fr 1fr}.stat{padding:16px}.grid,.workouts,.split{grid-template-columns:1fr}.schedule{grid-template-columns:1fr 1fr}.day{border-bottom:1px solid #303030}.hero-inner{padding-top:145px}.section{padding:48px 18px}.nav{padding-left:18px;padding-right:18px}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="inicio">
+<nav class="nav">
+  <div class="logo">AUGUSTO<span>/</span>TRAINING</div>
+  <div class="links"><a href="#protocolo">PROTOCOLO</a><a href="#semana">SEMANA</a><a href="#treinos">TREINOS</a><a href="#progressao">PROGRESSÃO</a></div>
+</nav>
+<div class="hero-inner">
+  <div class="kicker">PERSONAL TRAINING SYSTEM / FASE 01</div>
+  <h1>FORÇA.<br><span>CONTROLE.</span><br>CONSISTÊNCIA.</h1>
+  <p>Um sistema pessoal de treinamento doméstico construído em torno de técnica, progressão gradual, condicionamento e registro de desempenho. Esta primeira fase usa as cargas e exercícios definidos para o seu equipamento atual.</p>
+  <a class="cta" href="#treinos">EXPLORAR PROTOCOLO →</a>
+</div>
+</header>
+
+<section class="stats">
+<div class="stat"><b>03×</b><span>SESSÕES DE FORÇA / SEMANA</span></div>
+<div class="stat"><b>05–09 kg</b><span>FAIXA DE CARGA ATUAL</span></div>
+<div class="stat"><b>08–15</b><span>REPETIÇÕES PRINCIPAIS</span></div>
+<div class="stat"><b>FASE 01</b><span>BASE DE FORÇA E CONTROLE</span></div>
+</section>
+
+<section class="section" id="protocolo">
+<div class="section-title">01 / VISÃO GERAL</div>
+<h2>O que é o Augusto Training?</h2>
+<p class="lead">Não é apenas uma lista de exercícios. É uma estrutura para executar, registrar e progredir com segurança. O objetivo da Fase 1 é consolidar padrões de movimento e capacidade de trabalho antes de aumentar a complexidade ou a carga.</p>
+<div class="grid">
+<div class="card"><div class="number">01</div><h3>TÉCNICA</h3><p>Prioridade absoluta. A repetição só conta como progresso quando continua controlada.</p></div>
+<div class="card"><div class="number">02</div><h3>TENSÃO CONTROLADA</h3><p>Quando indicado, use aproximadamente 2–3 segundos na descida, pausa breve e subida controlada.</p></div>
+<div class="card"><div class="number">03</div><h3>PROGRESSÃO</h3><p>Primeiro domínio técnico, depois mais repetições dentro da faixa e só então aumento de resistência.</p></div>
+</div>
+</section>
+
+<section class="section" style="background:#0b0b0b;max-width:none" id="equipamento">
+<div style="max-width:1200px;margin:auto">
+<div class="section-title">02 / EQUIPAMENTO</div>
+<h2>Base doméstica</h2>
+<div class="grid">
+<div class="card"><div class="number">A</div><h3>MOCHILA A</h3><p><strong>5–6 kg</strong><br>Carga mais leve para remadas, ponte, pegada e variações adequadas.</p></div>
+<div class="card"><div class="number">B</div><h3>MOCHILA B</h3><p><strong>8–9 kg</strong><br>Carga mais pesada atualmente utilizada nos agachamentos definidos.</p></div>
+<div class="card"><div class="number">+</div><h3>CABO DE VASSOURA</h3><p>Somente para mobilidade, aquecimento, apoio e técnica. Não deve receber mochila ou carga.</p></div>
+</div>
+</div>
+</section>
+
+<section class="section" id="semana">
+<div class="section-title">03 / PLANO SEMANAL</div>
+<h2>Estrutura da semana</h2>
+<p class="lead">A organização alterna estímulo e recuperação. A semana seguinte pode inverter a ordem para manter A → B → A / B → A → B.</p>
+<div class="schedule">
+<div class="day"><b>SEG</b><strong>Treino A</strong><small>Força + Core</small></div>
+<div class="day"><b>TER</b><strong>Aeróbico leve</strong><small>Caminhada/bike leve</small></div>
+<div class="day"><b>QUA</b><strong>Treino B</strong><small>Força + resistência</small></div>
+<div class="day"><b>QUI</b><strong>Mobilidade</strong><small>Condicionamento leve</small></div>
+<div class="day"><b>SEX</b><strong>Treino A</strong><small>Força + Core</small></div>
+<div class="day"><b>SÁB</b><strong>Atividade livre</strong><small>Esporte, caminhada etc.</small></div>
+<div class="day"><b>DOM</b><strong>Recuperação</strong><small>Descanso</small></div>
+</div>
+</section>
+
+<section class="section" id="treinos" style="background:#0b0b0b;max-width:none">
+<div style="max-width:1200px;margin:auto">
+<div class="section-title">04 / SESSÕES</div>
+<h2>Treino A + Treino B</h2>
+<p class="lead">Os dois treinos cobrem pernas, empurrar, puxar, core, panturrilhas, tríceps e pegada, usando as cargas já estabelecidas.</p>
+<div class="workouts">
+<div class="workout"><div class="workout-head"><h3>TREINO A</h3><p>FORÇA + CORE / CORPO INTEIRO</p></div>
+<div class="exercise"><span class="n">01</span><div><b>Aquecimento</b><small>Mobilidade de ombros, rotação de tronco, agachamento sem carga e caminhada leve.</small></div><span class="load">5–8 MIN</span></div>
+<div class="exercise"><span class="n">02</span><div><b>Agachamento com mochila</b><small>Controle a descida e mantenha postura estável.</small></div><span class="load">3×12–15<br>8–9 KG</span></div>
+<div class="exercise"><span class="n">03</span><div><b>Flexão — controle + tensão</b><small>Descida lenta, pausa breve quando indicada e subida controlada.</small></div><span class="load">3×8–12</span></div>
+<div class="exercise"><span class="n">04</span><div><b>Remada unilateral</b><small>Puxe controlando e retorne lentamente.</small></div><span class="load">3×12–15<br>5–6 KG</span></div>
+<div class="exercise"><span class="n">05</span><div><b>Afundo</b><small>Comece pela perna direita e priorize estabilidade.</small></div><span class="load">3×10–15<br>/ PERNA</span></div>
+<div class="exercise"><span class="n">06</span><div><b>Ponte de glúteos</b><small>Contração controlada no topo.</small></div><span class="load">3×12–20</span></div>
+<div class="exercise"><span class="n">07</span><div><b>Panturrilha</b><small>Subida controlada e pausa no topo.</small></div><span class="load">3×15–20</span></div>
+<div class="exercise"><span class="n">08</span><div><b>Crunch</b><small>Movimento controlado sem puxar o pescoço.</small></div><span class="load">2×10–15</span></div>
+<div class="exercise"><span class="n">09</span><div><b>Prancha</b><small>Tensão constante e corpo alinhado.</small></div><span class="load">2×30–60S</span></div>
+<div class="exercise"><span class="n">10</span><div><b>Tríceps — pegada fechada</b><small>Amplitude confortável e técnica preservada.</small></div><span class="load">2×8–12</span></div>
+<div class="exercise"><span class="n">11</span><div><b>Sustentação de pegada</b><small>Postura firme durante a sustentação.</small></div><span class="load">2×20–40S</span></div>
+</div>
+
+<div class="workout"><div class="workout-head"><h3>TREINO B</h3><p>FORÇA + RESISTÊNCIA + CORE</p></div>
+<div class="exercise"><span class="n">01</span><div><b>Aquecimento</b><small>Mobilidade de ombros, rotação de tronco, agachamento sem carga e caminhada leve.</small></div><span class="load">5–8 MIN</span></div>
+<div class="exercise"><span class="n">02</span><div><b>Agachamento com pausa</b><small>Pausa breve em posição confortável antes da subida.</small></div><span class="load">3×10–15<br>8–9 KG</span></div>
+<div class="exercise"><span class="n">03</span><div><b>Flexão</b><small>Descida controlada e alinhamento consistente.</small></div><span class="load">3×8–12</span></div>
+<div class="exercise"><span class="n">04</span><div><b>Remada unilateral</b><small>Controle na puxada e no retorno.</small></div><span class="load">3×12–15<br>5–6 KG</span></div>
+<div class="exercise"><span class="n">05</span><div><b>Agachamento dividido</b><small>Comece pela perna direita e mantenha estabilidade.</small></div><span class="load">3×10–12<br>/ PERNA</span></div>
+<div class="exercise"><span class="n">06</span><div><b>Ponte de glúteos</b><small>Contração controlada no topo.</small></div><span class="load">3×15–20</span></div>
+<div class="exercise"><span class="n">07</span><div><b>Panturrilha</b><small>Movimento lento e controlado.</small></div><span class="load">3×15–20</span></div>
+<div class="exercise"><span class="n">08</span><div><b>Dead bug</b><small>Movimente braços e pernas mantendo o tronco estável.</small></div><span class="load">3×8–12<br>/ LADO</span></div>
+<div class="exercise"><span class="n">09</span><div><b>Prancha lateral</b><small>Quadril e tronco alinhados.</small></div><span class="load">2×20–40S</span></div>
+<div class="exercise"><span class="n">10</span><div><b>Tríceps — pegada fechada</b><small>Amplitude confortável e técnica preservada.</small></div><span class="load">2×8–12</span></div>
+<div class="exercise"><span class="n">11</span><div><b>Sustentação de pegada</b><small>Postura firme durante a sustentação.</small></div><span class="load">2×20–40S</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title">05 / TÉCNICA</div>
+<h2>Tensão controlada</h2>
+<div class="split">
+<div class="panel"><h3>COMO EXECUTAR</h3>
+<p>01 — <b>Descida:</b> aproximadamente 2–3 segundos quando a técnica do exercício pedir.</p>
+<p>02 — <b>Pausa:</b> cerca de 1 segundo em posições apropriadas.</p>
+<p>03 — <b>Subida:</b> controlada, sem perder alinhamento.</p>
+<p>04 — <b>Tensão:</b> mantenha o controle do músculo durante toda a repetição.</p>
+</div>
+<div class="panel"><h3>DESCANSO</h3><p>Use aproximadamente 60–90 segundos entre séries como ponto de partida.</p><div class="bar"><i></i></div><p>Se a recuperação estiver incompleta e a técnica cair, descanse mais antes da próxima série.</p></div>
+</div>
+</section>
+
+<section class="section" id="progressao" style="background:#0b0b0b;max-width:none">
+<div style="max-width:1200px;margin:auto">
+<div class="section-title">06 / PROGRESSÃO</div>
+<h2>Como o sistema evolui</h2>
+<table class="table">
+<tr><th>ETAPA</th><th>CRITÉRIO</th><th>PRÓXIMO PASSO</th></tr>
+<tr><td>01 — Técnica</td><td>Movimento consistente e controlado.</td><td>Manter a carga e praticar.</td></tr>
+<tr><td>02 — Volume</td><td>Repetições dentro da faixa ficam confortáveis.</td><td>Aumentar gradualmente as repetições.</td></tr>
+<tr><td>03 — Resistência</td><td>Faixa superior é dominada com boa técnica.</td><td>Aumentar a dificuldade/carga de forma gradual.</td></tr>
+<tr><td>04 — Variação</td><td>O movimento básico está consolidado.</td><td>Introduzir uma variação apropriada.</td></tr>
+</table>
+<div class="notice"><strong>Regra central:</strong> não é necessário buscar falha em todas as séries. A prioridade é terminar com técnica sólida e progredir ao longo das semanas.</div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title">07 / RECUPERAÇÃO E SEGURANÇA</div>
+<h2>Treinar também é recuperar</h2>
+<div class="grid">
+<div class="card"><div class="number">01</div><h3>SONO</h3><p>Para adolescentes, uma rotina regular de sono é parte importante da recuperação.</p></div>
+<div class="card"><div class="number">02</div><h3>ALIMENTAÇÃO</h3><p>Alimentação variada e suficiente para crescimento, energia e recuperação; sem dietas restritivas.</p></div>
+<div class="card"><div class="number">03</div><h3>DOR</h3><p>Não use a rotina para “treinar através da dor”. Dor persistente ou sintomas importantes exigem avaliação profissional.</p></div>
+</div>
+<div class="notice"><strong>Joelho:</strong> se houver dor que piora, inchaço, travamento, sensação de instabilidade ou dificuldade nas atividades normais, interrompa o exercício que provoca o sintoma e procure orientação de pediatra, fisioterapeuta ou ortopedista.</div>
+</section>
+
+<section class="section" style="border-top:1px solid #292929">
+<div class="section-title">08 / PRÓXIMAS VERSÕES</div>
+<h2>Roadmap do aplicativo</h2>
+<div class="grid">
+<div class="card"><h3>V1.1 — TREINO INTERATIVO</h3><p>Botões de séries concluídas, cronômetro automático, registro de carga e observações por exercício.</p></div>
+<div class="card"><h3>V1.2 — PROGRESSÃO</h3><p>Histórico por exercício, gráficos simples e sugestões de progressão baseadas no desempenho registrado.</p></div>
+<div class="card"><h3>V2.0 — APP COMPLETO</h3><p>Perfil local, biblioteca visual de exercícios, notificações, sessões de condicionamento e backup dos dados.</p></div>
+</div>
+</section>
+
+<footer class="footer">AUGUSTO TRAINING <span>•</span> FASE 01 <span>•</span> TÉCNICA PRIMEIRO / PROGRESSÃO GRADUAL / CONSISTÊNCIA</footer>
+
+<div class="appbar">
+<button onclick="openTimer()">⏱ CRONÔMETRO</button>
+<button onclick="window.scrollTo({top:document.getElementById('treinos').offsetTop-20,behavior:'smooth'})">TREINOS</button>
+<button onclick="window.scrollTo({top:document.getElementById('progressao').offsetTop-20,behavior:'smooth'})">PROGRESSÃO</button>
+</div>
+
+<div class="modal" id="timerModal">
+<div class="modalbox"><button class="close" onclick="closeTimer()">×</button>
+<div class="section-title">FERRAMENTA</div><h2>Descanso</h2>
+<div class="timer" id="clock">01:00</div>
+<div class="timer-controls">
+<button onclick="setTimer(30)">30s</button><button onclick="setTimer(60)">60s</button><button onclick="setTimer(90)">90s</button><button class="primary" onclick="startTimer()">INICIAR</button><button onclick="stopTimer()">PARAR</button>
+</div></div></div>
+
+<script>
+let seconds=60,interval=null;
+function openTimer(){document.getElementById('timerModal').classList.add('open');updateClock()}
+function closeTimer(){stopTimer();document.getElementById('timerModal').classList.remove('open')}
+function setTimer(s){stopTimer();seconds=s;updateClock()}
+function updateClock(){let m=String(Math.floor(seconds/60)).padStart(2,'0'),s=String(seconds%60).padStart(2,'0');document.getElementById('clock').textContent=m+':'+s}
+function startTimer(){stopTimer();interval=setInterval(()=>{seconds--;updateClock();if(seconds<=0){stopTimer();navigator.vibrate?.([150,80,150])}},1000)}
+function stopTimer(){if(interval){clearInterval(interval);interval=null}}
+</script>
+</body>
+</html>
