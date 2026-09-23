@@ -1,0 +1,12 @@
+{
+  "name": "Augusto Training",
+  "short_name": "Training",
+  "description": "Sistema pessoal de treinamento e acompanhamento.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080808",
+  "theme_color": "#090909",
+  "lang": "pt-BR"
+}

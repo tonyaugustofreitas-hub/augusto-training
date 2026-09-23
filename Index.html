@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#090909">
+
+    <meta name="description"
+          content="Augusto Training — sistema pessoal de treinamento.">
+
+    <title>Augusto Training</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --black: #070707;
+            --black2: #111111;
+            --glass: rgba(255,255,255,.055);
+            --border: rgba(255,255,255,.12);
+
+            --red: #c40018;
+            --red2: #ed1730;
+
+            --gold: #c8a24a;
+
+            --white: #f4f4f4;
+            --gray: #a6a6a6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(196,0,24,.20),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 30%,
+                    rgba(200,162,74,.10),
+                    transparent 28%
+                ),
+
+                linear-gradient(
+                    145deg,
+                    #050505,
+                    #111111,
+                    #070707
+                );
+
+            color: var(--white);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: .025;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.5) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.5) 1px,
+                    transparent 1px
+                );
+
+            background-size: 35px 35px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+
+            padding: 18px;
+
+            background:
+                rgba(8,8,8,.70);
+
+            backdrop-filter: blur(20px);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--red2);
+        }
+
+        .status {
+            font-size: 10px;
+
+            color: var(--gold);
+
+            letter-spacing: 1px;
+        }
+
+        main {
+            width: min(900px,92%);
+
+            margin: auto;
+
+            padding:
+                30px 0 110px;
+        }
+
+        .hero {
+            padding:
+                35px 0 25px;
+        }
+
+        .kicker {
+            color: var(--gold);
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 13px;
+        }
+
+        h1 {
+            font-size:
+                clamp(36px,9vw,72px);
+
+            line-height: .96;
+
+            max-width: 700px;
+        }
+
+        h1 span {
+            color: var(--red2);
+        }
+
+        .hero p {
+            color: var(--gray);
+
+            margin-top: 18px;
+
+            line-height: 1.6;
+
+            max-width: 650px;
+        }
+
+        .buttons {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 24px;
+
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: 0;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-weight: 700;
+
+            padding:
+                13px 18px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--red),
+                    #76000f
+                );
+
+            box-shadow:
+                0 8px 30px
+                rgba(196,0,24,.18);
+        }
+
+        button.secondary {
+            background: var(--glass);
+
+            border:
+                1px solid
+                var(--border);
+        }
+
+        button:active {
+            transform: scale(.97);
+        }
+
+        section {
+            margin-top: 28px;
+        }
+
+        .section-title {
+            font-size: 12px;
+
+            color: var(--gold);
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+        }
+
+        .glass {
+            background: var(--glass);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 24px;
+
+            padding: 20px;
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                inset 0 1px 0
+                rgba(255,255,255,.05),
+
+                0 20px 60px
+                rgba(0,0,0,.25);
+        }
+
+        .dashboard {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 12px;
+        }
+
+        .metric strong {
+            display: block;
+
+            font-size: 25px;
+
+            margin-bottom: 5px;
+        }
+
+        .metric small {
+            color: var(--gray);
+        }
+
+        .progress-box {
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+        .ring {
+            width: 110px;
+            height: 110px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            display: grid;
+
+            place-items: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #111 58%,
+                    transparent 60%
+                ),
+
+                conic-gradient(
+                    var(--red2) 72%,
+                    #292929 0
+                );
+        }
+
+        .ring strong {
+            font-size: 23px;
+        }
+
+        .week {
+            display: grid;
+
+            grid-template-columns:
+                repeat(7,1fr);
+
+            gap: 7px;
+        }
+
+        .day {
+            text-align: center;
+
+            padding: 12px 5px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,.06);
+        }
+
+        .day strong {
+            display: block;
+
+            font-size: 11px;
+        }
+
+        .day small {
+            color: var(--gray);
+
+            font-size: 9px;
+        }
+
+        .workout {
+            margin-top: 15px;
+        }
+
+        .workout h3 {
+            margin-bottom: 14px;
+        }
+
+        .exercise {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.06);
+        }
+
+        .exercise:last-child {
+            border-bottom: 0;
+        }
+
+        .exercise input {
+            width: 20px;
+            height: 20px;
+
+            accent-color:
+                var(--red2);
+        }
+
+        .exercise-info {
+            flex: 1;
+        }
+
+        .exercise-info strong {
+            display: block;
+
+            font-size: 14px;
+        }
+
+        .exercise-info small {
+            display: block;
+
+            color: var(--gray);
+
+            margin-top: 3px;
+        }
+
+        .done {
+            opacity: .45;
+
+            text-decoration:
+                line-through;
+        }
+
+        .info-list {
+            display: grid;
+
+            gap: 12px;
+        }
+
+        .info {
+            padding: 15px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.035);
+        }
+
+        .info strong {
+            color: var(--gold);
+
+            display: block;
+
+            margin-bottom: 5px;
+        }
+
+        .info p {
+            color: var(--gray);
+
+            line-height: 1.5;
+
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+
+            color: #777;
+
+            margin-top: 40px;
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+        }
+
+        nav {
+            position: fixed;
+
+            bottom: 12px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: min(94%,600px);
+
+            z-index: 30;
+
+            display: flex;
+
+            justify-content:
+                space-around;
+
+            padding: 9px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(12,12,12,.80);
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+
+            backdrop-filter:
+                blur(20px);
+        }
+
+        nav button {
+            background: transparent;
+
+            box-shadow: none;
+
+            color: #aaa;
+
+            font-size: 10px;
+
+            padding: 10px;
+        }
+
+        nav button.active {
+            color: white;
+        }
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 50;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,0,0,.72);
+
+            backdrop-filter:
+                blur(10px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width:
+                min(400px,100%);
+
+            text-align: center;
+        }
+
+        .timer {
+            font-size: 65px;
+
+            font-weight: 900;
+
+            margin: 20px 0;
+        }
+
+        .timer-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+        @media(max-width:650px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .week {
+                grid-template-columns:
+                    repeat(4,1fr);
+            }
+
+            .progress-box {
+                align-items:
+                    flex-start;
+            }
+
+            .ring {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media(prefers-reduced-motion:no-preference) {
+
+            .glass {
+                animation:
+                    appear .5s ease both;
+            }
+
+            @keyframes appear {
+
+                from {
+                    opacity: 0;
+                    transform:
+                        translateY(8px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform:
+                        translateY(0);
+                }
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="logo">
+            AUGUSTO<span>/</span>TRAINING
+        </div>
+
+        <div class="status">
+            FASE 01 · ATIVO
+        </div>
+
+    </div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+    <div class="kicker">
+        SISTEMA PESSOAL
+    </div>
+
+    <h1>
+        Força com método.<br>
+        <span>Controle em cada sessão.</span>
+    </h1>
+
+    <p>
+        Treinamento doméstico focado em força,
+        resistência, técnica, mobilidade e
+        progressão gradual.
+    </p>
+
+    <div class="buttons">
+
+        <button onclick="scrollToSection('treinos')">
+            COMEÇAR SESSÃO
+        </button>
+
+        <button
+            class="secondary"
+            onclick="openTimer()">
+            DESCANSO
+        </button>
+
+    </div>
+
+</section>
+
+<section id="inicio">
+
+    <div class="section-title">
+        PAINEL
+    </div>
+
+    <div class="glass dashboard">
+
+        <div class="metric">
+
+            <strong id="exerciseCount">
+                0/22
+            </strong>
+
+            <small>
+                Exercícios
+            </small>
+
+        </div>
+
+        <div class="metric">
+
+            <strong>
+                72%
+            </strong>
+
+            <small>
+                Fase atual
+            </small>
+
+        </div>
+
+        <div class="metric">
+
+            <strong>
+                5–9 kg
+            </strong>
+
+            <small>
+                Base de carga
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section>
+
+    <div class="glass progress-box">
+
+        <div class="ring">
+
+            <strong>
+                72%
+            </strong>
+
+        </div>
+
+        <div>
+
+            <div class="section-title">
+                PROGRESSO
+            </div>
+
+            <h2>
+                Fase 01
+            </h2>
+
+            <p style="
+                color:#aaa;
+                margin-top:8px;
+                line-height:1.5;
+            ">
+                Prioridade: técnica, controle,
+                consistência e adaptação.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section>
+
+    <div class="section-title">
+        RITMO SEMANAL
+    </div>
+
+    <div class="glass week">
+
+        <div class="day">
+            <strong>SEG</strong>
+            <small>Treino A</small>
+        </div>
+
+        <div class="day">
+            <strong>TER</strong>
+            <small>Aeróbico</small>
+        </div>
+
+        <div class="day">
+            <strong>QUA</strong>
+            <small>Treino B</small>
+        </div>
+
+        <div class="day">
+            <strong>QUI</strong>
+            <small>Mob.</small>
+        </div>
+
+        <div class="day">
+            <strong>SEX</strong>
+            <small>Treino A</small>
+        </div>
+
+        <div class="day">
+            <strong>SÁB</strong>
+            <small>Atividade</small>
+        </div>
+
+        <div class="day">
+            <strong>DOM</strong>
+            <small>Recup.</small>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="treinos">
+
+    <div class="section-title">
+        SESSÕES
+    </div>
+
+    <div class="glass workout">
+
+        <h3>
+            Treino A
+        </h3>
+
+        <div id="workoutA"></div>
+
+    </div>
+
+    <div class="glass workout">
+
+        <h3>
+            Treino B
+        </h3>
+
+        <div id="workoutB"></div>
+
+    </div>
+
+    <button
+        class="secondary"
+        style="
+            margin-top:15px;
+            width:100%;
+        "
+        onclick="resetWorkout()">
+
+        RESETAR SESSÃO
+
+    </button>
+
+</section>
+
+<section id="metodo">
+
+    <div class="section-title">
+        MÉTODO
+    </div>
+
+    <div class="glass info-list">
+
+        <div class="info">
+
+            <strong>
+                Tensão controlada
+            </strong>
+
+            <p>
+                Movimento controlado, especialmente
+                na fase de descida, sem transformar
+                cada repetição em um movimento
+                excessivamente lento.
+            </p>
+
+        </div>
+
+        <div class="info">
+
+            <strong>
+                Progressão
+            </strong>
+
+            <p>
+                Primeiro consolide a técnica.
+                Depois aumente gradualmente
+                repetições, controle ou carga
+                quando o exercício estiver fácil.
+            </p>
+
+        </div>
+
+        <div class="info">
+
+            <strong>
+                Recuperação
+            </strong>
+
+            <p>
+                Descanso faz parte do treinamento.
+                A rotina alterna estímulos para
+                evitar acumular fadiga
+                desnecessariamente.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="seguranca">
+
+    <div class="section-title">
+        SEGURANÇA
+    </div>
+
+    <div class="glass info-list">
+
+        <div class="info">
+
+            <strong>
+                Técnica primeiro
+            </strong>
+
+            <p>
+                Não é necessário treinar até a falha.
+                Mantenha execução controlada.
+            </p>
+
+        </div>
+
+        <div class="info">
+
+            <strong>
+                Joelho
+            </strong>
+
+            <p>
+                Se houver dor, reduza ou interrompa
+                o movimento. Dor persistente,
+                inchaço, travamento ou instabilidade
+                merecem avaliação profissional.
+            </p>
+
+        </div>
+
+        <div class="info">
+
+            <strong>
+                Equipamento
+            </strong>
+
+            <p>
+                A mochila é utilizada como carga.
+                O cabo de vassoura é somente para
+                mobilidade e apoio técnico.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    AUGUSTO TRAINING · FASE 01
+</footer>
+
+</main>
+
+<nav>
+
+    <button
+        class="active"
+        onclick="scrollToSection('inicio')">
+        INÍCIO
+    </button>
+
+    <button
+        onclick="scrollToSection('treinos')">
+        SESSÕES
+    </button>
+
+    <button
+        onclick="scrollToSection('metodo')">
+        MÉTODO
+    </button>
+
+    <button
+        onclick="openTimer()">
+        DESCANSO
+    </button>
+
+</nav>
+
+<div
+    class="modal"
+    id="timerModal">
+
+    <div class="modal-box glass">
+
+        <div class="section-title">
+            DESCANSO
+        </div>
+
+        <div
+            class="timer"
+            id="timer">
+            60
+        </div>
+
+        <div class="timer-buttons">
+
+            <button onclick="setTimer(30)">
+                30s
+            </button>
+
+            <button onclick="setTimer(60)">
+                60s
+            </button>
+
+            <button onclick="setTimer(90)">
+                90s
+            </button>
+
+        </div>
+
+        <div
+            class="buttons"
+            style="justify-content:center;">
+
+            <button onclick="startTimer()">
+                INICIAR
+            </button>
+
+            <button
+                class="secondary"
+                onclick="closeTimer()">
+                FECHAR
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const exercises = {
+
+    A: [
+
+        ["Agachamento + mochila",
+         "3 × 12–15"],
+
+        ["Flexão controlada",
+         "3 × 8–12"],
+
+        ["Remada unilateral",
+         "3 × 12–15 / braço"],
+
+        ["Afundo",
+         "3 × 10–15 / perna"],
+
+        ["Ponte de glúteos",
+         "3 × 12–20"],
+
+        ["Panturrilha",
+         "3 × 15–20"],
+
+        ["Prancha",
+         "2 × 30–60s"],
+
+        ["Abdominal",
+         "2 × 10–15"],
+
+        ["Flexão fechada",
+         "2 × 8–12"],
+
+        ["Isometria de pegada",
+         "2 × 20–40s"],
+
+        ["Aquecimento",
+         "5–8 min"]
+
+    ],
+
+    B: [
+
+        ["Agachamento com pausa",
+         "3 × 10–15"],
+
+        ["Flexão",
+         "3 × 8–12"],
+
+        ["Remada unilateral",
+         "3 × 12–15 / braço"],
+
+        ["Agachamento dividido",
+         "3 × 10–12 / perna"],
+
+        ["Ponte de glúteos",
+         "3 × 15–20"],
+
+        ["Panturrilha",
+         "3 × 15–20"],
+
+        ["Dead bug",
+         "3 × 8–12 / lado"],
+
+        ["Prancha lateral",
+         "2 × 20–40s / lado"],
+
+        ["Flexão fechada",
+         "2 × 8–12"],
+
+        ["Isometria de pegada",
+         "2 × 20–40s"],
+
+        ["Aquecimento",
+         "5–8 min"]
+
+    ]
+
+};
+
+let timerValue = 60;
+let interval = null;
+
+function createWorkout(id, list) {
+
+    const container =
+        document.getElementById(id);
+
+    list.forEach((item,index) => {
+
+        const key =
+            id + "-" + index;
+
+        const checked =
+            localStorage.getItem(key)
+            === "true";
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "exercise";
+
+        div.innerHTML = `
+
+            <input
+                type="checkbox"
+                ${checked ? "checked" : ""}
+                onchange="
+                    toggleExercise(
+                        '${key}',
+                        this
+                    )
+                "
+            >
+
+            <div
+                class="
+                    exercise-info
+                    ${checked ? "done" : ""}
+                ">
+
+                <strong>
+                    ${item[0]}
+                </strong>
+
+                <small>
+                    ${item[1]}
+                </small>
+
+            </div>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+function toggleExercise(key, checkbox) {
+
+    localStorage.setItem(
+        key,
+        checkbox.checked
+    );
+
+    const info =
+        checkbox.parentElement
+        .querySelector(".exercise-info");
+
+    info.classList.toggle(
+        "done",
+        checkbox.checked
+    );
+
+    updateCount();
+
+}
+
+function updateCount() {
+
+    let completed = 0;
+
+    Object.keys(localStorage)
+        .forEach(key => {
+
+            if (
+                (
+                    key.startsWith("workoutA-") ||
+                    key.startsWith("workoutB-")
+                ) &&
+                localStorage.getItem(key)
+                === "true"
+            ) {
+                completed++;
+            }
+
+        });
+
+    document.getElementById(
+        "exerciseCount"
+    ).textContent =
+        completed + "/22";
+
+}
+
+function resetWorkout() {
+
+    if (
+        !confirm(
+            "Resetar os exercícios desta sessão?"
+        )
+    ) {
+        return;
+    }
+
+    Object.keys(localStorage)
+        .forEach(key => {
+
+            if (
+                key.startsWith("workoutA-") ||
+                key.startsWith("workoutB-")
+            ) {
+
+                localStorage.removeItem(key);
+
+            }
+
+        });
+
+    location.reload();
+
+}
+
+function scrollToSection(id) {
+
+    document
+        .getElementById(id)
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+function openTimer() {
+
+    document
+        .getElementById("timerModal")
+        .classList.add("show");
+
+}
+
+function closeTimer() {
+
+    document
+        .getElementById("timerModal")
+        .classList.remove("show");
+
+    clearInterval(interval);
+
+}
+
+function setTimer(seconds) {
+
+    clearInterval(interval);
+
+    timerValue =
+        seconds;
+
+    document
+        .getElementById("timer")
+        .textContent =
+        timerValue;
+
+}
+
+function startTimer() {
+
+    clearInterval(interval);
+
+    interval =
+        setInterval(() => {
+
+            timerValue--;
+
+            document
+                .getElementById("timer")
+                .textContent =
+                timerValue;
+
+            if (timerValue <= 0) {
+
+                clearInterval(interval);
+
+                if (navigator.vibrate) {
+
+                    navigator.vibrate([
+                        300,
+                        100,
+                        300
+                    ]);
+
+                }
+
+                document
+                    .getElementById("timer")
+                    .textContent =
+                    "✓";
+
+            }
+
+        },1000);
+
+}
+
+createWorkout(
+    "workoutA",
+    exercises.A
+);
+
+createWorkout(
+    "workoutB",
+    exercises.B
+);
+
+updateCount();
+
+/*
+    REGISTRO DO PWA
+*/
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker
+                .register("./sw.js")
+                .then(
+                    registration => {
+
+                        console.log(
+                            "Service Worker ativo:",
+                            registration.scope
+                        );
+
+                    }
+                )
+                .catch(
+                    error => {
+
+                        console.error(
+                            "Erro ao registrar Service Worker:",
+                            error
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>
